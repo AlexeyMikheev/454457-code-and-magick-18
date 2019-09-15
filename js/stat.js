@@ -1,5 +1,4 @@
 window.renderStatistics = function (ctx, names, times) {
-  console.log('renderStatistics');
 
   var drawRect = function (ctx, x, y, width, height, fillColor) {
     ctx.fillStyle = fillColor;
@@ -12,44 +11,88 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.fillText(text, x, y);
   }
 
-  if (ctx != null) {
+  var calculateChartScale = function (times, maxChartHeightPx) {
+    var max = Number.MIN_VALUE;
+    for (var i = 0; i < times.length; i++) {
+      if (times[i] > max) {
+        max = times[i];
+      }
+    }
+    return maxChartHeightPx / max;
+  }
 
+  var drawChartsBottom = function () {
     var colorRectStyle = "rgba(0, 0, 0, 0.7)";
     drawRect(ctx, 110, 20, 420, 270, colorRectStyle);
 
     colorRectStyle = "rgb(255, 255, 255)";
     drawRect(ctx, 100, 10, 420, 270, colorRectStyle);
+  }
 
+  var drawChartsHeader = function () {
     var textColor = 'rgb(0, 0, 0)';
     var textStyle = 'PT Mono 16px';
     drawText(ctx, 120, 40, "Ура вы победили!", textStyle, textColor);
     drawText(ctx, 120, 60, "Cписок результатов:", textStyle, textColor);
+  }
 
+  var drawCharts = function () {
     var chartsX = 140;
-    var chartsY = 80;
-    var chartWidth = 340;
-    var chartHeight = 170;
+    var chartsY = 70;
+    var chartsWidth = 340;
+    var chartsHeight = 190;
 
-    colorRectStyle = "rgba(0, 0, 0, 0.7)";
-    //drawRect(ctx, chartsX, chartsY, chartWidth, chartHeight, colorRectStyle);
+    //drawRect(ctx, chartsX, chartsY, chartsWidth, chartsHeight, "rgba(0, 0, 0, 0.7)");  // для отладки начала отсчета координат внутри charts
 
     textColor = 'rgb(0, 0, 0)';
-    //var colorStyle = 'rgb(255, 255, 255)';
-    var bottomLabelY = chartsY + chartHeight;
+    var bottomLabelY = chartsY + chartsHeight;
+
     var topLabelY = chartsY + 20;
-    var chartY = chartsY + 30;
 
-    drawText(ctx, chartsX, bottomLabelY, 'Вы', textStyle, textColor);
-    drawRect(ctx, chartsX, chartY, 50, 120, "blue");
-    drawText(ctx, chartsX, topLabelY, 'Очки', textStyle, textColor);
+    var chartX = chartsX;
+    var chartWidth = 40;
+    var chartXPadding = 50;
+    var maxChartHeight = 140;
 
-    drawText(ctx, chartsX + 90, bottomLabelY, 'Вы 1', textStyle, textColor);
-    drawText(ctx, chartsX + 90, topLabelY, 'Очки', textStyle, textColor);
+    var selfChartFillColor = 'rgba(255, 0, 0, 1)'
+    var otherChartFillColor = 'hsl(240, 100%, 50%)'
 
-    drawText(ctx, chartsX + 180, bottomLabelY, 'Вы 2', textStyle, textColor);
-    drawText(ctx, chartsX + 180, topLabelY, 'Очки', textStyle, textColor);
+    var chartScale = calculateChartScale(times, maxChartHeight);
 
-    drawText(ctx, chartsX + 270, bottomLabelY, 'Вы 3', textStyle, textColor);
-    drawText(ctx, chartsX + 270, topLabelY, 'Очки', textStyle, textColor);
+    var textStyle = 'PT Mono 16px';
+
+    for (let i = 0; i < names.length; i++) {
+
+      var name = names[i];
+      var time = Math.round(times[i]);
+      var chartHeight = time * chartScale;
+
+      var chartY = bottomLabelY - 20 - chartHeight;
+      var topLabelY = chartY - 10;
+
+      var chartColor = otherChartFillColor;
+
+      if (name.toLowerCase() == "вы") {
+        chartColor = selfChartFillColor;
+      }
+      else {
+        chartColor = 'hsl(240,' + 100 * Math.random() + '%,50%)';
+      }
+
+      drawText(ctx, chartX, bottomLabelY, name, textStyle, textColor);
+      drawRect(ctx, chartX, chartY, chartWidth, chartHeight, chartColor);
+      drawText(ctx, chartX, topLabelY, time, textStyle, textColor);
+
+      chartX += chartWidth + chartXPadding;
+    }
+  }
+
+  if (ctx != null) {
+
+    drawChartsBottom();
+
+    drawChartsHeader();
+
+    drawCharts();
   }
 }
