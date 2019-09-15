@@ -39,10 +39,7 @@ var drawChartsHeader = function (ctx) {
 var drawCharts = function (ctx, names, times) {
   var chartsX = 140;
   var chartsY = 70;
-  // var chartsWidth = 340;
   var chartsHeight = 190;
-
-  // drawRect(ctx, chartsX, chartsY, chartsWidth, chartsHeight, "rgba(0, 0, 0, 0.7)");  // для отладки начала отсчета координат внутри charts
 
   var textColor = 'rgb(0, 0, 0)';
   var bottomLabelY = chartsY + chartsHeight;
