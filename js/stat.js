@@ -37,34 +37,29 @@ var drawChartsHeader = function (ctx) {
 };
 
 var drawCharts = function (ctx, names, times) {
-  var chartsX = 140;
-  var chartsY = 70;
-  var chartsHeight = 190;
+  var CHARTS_X = 140;
+  var CHARTS_Y = 70;
+  var CHARTS_HEIGHT = 190;
 
-  var textColor = 'rgb(0, 0, 0)';
-  var bottomLabelY = chartsY + chartsHeight;
+  var TEXT_COLOR = 'rgb(0, 0, 0)';
+  var bottomLabelY = CHARTS_Y + CHARTS_HEIGHT;
 
-  var chartX = chartsX;
-  var chartWidth = 40;
-  var chartXPadding = 50;
-  var maxChartHeight = 140;
+  var chartX = CHARTS_X;
+  var CHART_WIDTH = 40;
+  var CHART_X_PADDING = 50;
+  var MAX_CHART_HEIGHT = 140;
 
   var selfChartFillColor = 'rgba(255, 0, 0, 1)';
   var otherChartFillColor = 'hsl(240, 100%, 50%)';
-
-  var chartScale = calculateChartScale(times, maxChartHeight);
-
+  var chartScale = calculateChartScale(times, MAX_CHART_HEIGHT);
   var textStyle = 'PT Mono 16px';
 
   for (var i = 0; i < names.length; i++) {
-
     var name = names[i];
     var time = Math.round(times[i]);
     var chartHeight = time * chartScale;
-
     var chartY = bottomLabelY - 20 - chartHeight;
     var topLabelY = chartY - 10;
-
     var chartColor = otherChartFillColor;
 
     if (name.toLowerCase() === 'вы') {
@@ -73,23 +68,18 @@ var drawCharts = function (ctx, names, times) {
       chartColor = 'hsl(240,' + 100 * Math.random() + '%,50%)';
     }
 
-    drawText(ctx, chartX, bottomLabelY, name, textStyle, textColor);
-    drawRect(ctx, chartX, chartY, chartWidth, chartHeight, chartColor);
-    drawText(ctx, chartX, topLabelY, time, textStyle, textColor);
+    drawText(ctx, chartX, bottomLabelY, name, textStyle, TEXT_COLOR);
+    drawRect(ctx, chartX, chartY, CHART_WIDTH, chartHeight, chartColor);
+    drawText(ctx, chartX, topLabelY, time, textStyle, TEXT_COLOR);
 
-    chartX += chartWidth + chartXPadding;
+    chartX += CHART_WIDTH + CHART_X_PADDING;
   }
 };
 
-
 window.renderStatistics = function (ctx, names, times) {
-
   if (ctx !== null) {
-
     drawChartsBottom(ctx);
-
     drawChartsHeader(ctx);
-
     drawCharts(ctx, names, times);
   }
 };
