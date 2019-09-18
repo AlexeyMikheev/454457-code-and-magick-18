@@ -1,6 +1,5 @@
 'use strict';
 
-
 var NAMES = [
   'Иван',
   'Хуан Себастьян',
@@ -23,7 +22,7 @@ var SURNAMES = [
   'Ирвинг'
 ];
 
-var COATCOLORS = [
+var COAT_COLORS = [
   'rgb(101,137,164)',
   'rgb(241,43,107)',
   'rgb(146,100,161)',
@@ -32,13 +31,15 @@ var COATCOLORS = [
   'rgb(0,0,0)'
 ];
 
-var EYESCOLORS = [
+var EYES_COLORS = [
   'black',
   'red',
   'blue',
   'yellow',
   'green'
 ];
+
+var ITEMS_COUNT = 4;
 
 var randomInteger = function (min, max) {
   var rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -54,8 +55,8 @@ var getRandomItem = function () {
   var item = {};
 
   item.name = getRandomString(NAMES) + ' ' + getRandomString(SURNAMES);
-  item.coatColor = getRandomString(COATCOLORS);
-  item.eyesColor = getRandomString(EYESCOLORS);
+  item.coatColor = getRandomString(COAT_COLORS);
+  item.eyesColor = getRandomString(EYES_COLORS);
 
   return item;
 };
@@ -63,8 +64,7 @@ var getRandomItem = function () {
 var getRandomItems = function (count) {
   var items = [];
   for (var i = 0; i < count; i++) {
-    var item = getRandomItem();
-    items.push(item);
+    items.push(getRandomItem());
   }
   return items;
 };
@@ -92,6 +92,6 @@ document.querySelector('.setup-similar').classList.remove('hidden');
 
 var dialogList = document.querySelector('.setup-similar-list');
 
-var items = getRandomItems(4);
+var items = getRandomItems(ITEMS_COUNT);
 
 bindDOMItems(items);
