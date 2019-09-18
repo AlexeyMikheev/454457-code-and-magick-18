@@ -47,7 +47,7 @@ var randomInteger = function (min, max) {
 };
 
 var getRandomString = function (strings) {
-  var randomIndex = randomInteger(0, strings.length);
+  var randomIndex = randomInteger(0, strings.length - 1);
   return strings[randomIndex];
 };
 
