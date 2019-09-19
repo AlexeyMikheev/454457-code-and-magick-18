@@ -78,8 +78,8 @@ var createDOMItem = function (item, template) {
 };
 
 var bindDOMItems = function (items) {
-  var itemTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
-  var domItem = null;
+  var itemTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item'),
+    domItem = null;
   for (var i = 0; i < items.length; i++) {
     domItem = createDOMItem(items[i], itemTemplate.cloneNode(true));
     dialogList.appendChild(domItem);
@@ -91,8 +91,7 @@ dialog.classList.remove('hidden');
 
 document.querySelector('.setup-similar').classList.remove('hidden');
 
-var dialogList = document.querySelector('.setup-similar-list');
-
-var items = getRandomItems(ITEMS_COUNT);
+var dialogList = document.querySelector('.setup-similar-list'),
+  items = getRandomItems(ITEMS_COUNT);
 
 bindDOMItems(items);
