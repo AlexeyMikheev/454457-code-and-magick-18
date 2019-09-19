@@ -79,8 +79,9 @@ var createDOMItem = function (item, template) {
 
 var bindDOMItems = function (items) {
   var itemTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
+  var domItem = null;
   for (var i = 0; i < items.length; i++) {
-    var domItem = createDOMItem(items[i], itemTemplate.cloneNode(true));
+    domItem = createDOMItem(items[i], itemTemplate.cloneNode(true));
     dialogList.appendChild(domItem);
   }
 };
