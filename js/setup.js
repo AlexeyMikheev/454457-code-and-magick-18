@@ -39,7 +39,18 @@ var EYES_COLORS = [
   'green'
 ];
 
+var WRAP_COLORS = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
+];
+
 var ITEMS_COUNT = 4;
+
+var ENTER_KEY = 13;
+var ESC_KEY = 27;
 
 var randomInteger = function (min, max) {
   var rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -100,18 +111,60 @@ var setupDialog = document.querySelector('.setup');
 var setupOpen = document.querySelector('.setup-open');
 var setupClose = setupDialog.querySelector('.setup-close');
 
+var setupDialogOpened = false;
+
 var openDialog = function () {
+  setupDialogOpened = true;
   setupDialog.classList.remove('hidden');
 };
 
 var closeDialog = function () {
+  setupDialogOpened = false;
   setupDialog.classList.add('hidden');
 };
 
-setupOpen.addEventListener('click', function () {
-  openDialog();
-});
+var initDocumentEvents = function () {
+  document.addEventListener('keydown', function (event) {
+    if (event.keyCode === ENTER_KEY && !setupDialogOpened) {
+      openDialog();
+    }
+    if (event.keyCode === ESC_KEY && setupDialogOpened) {
+      closeDialog();
+    }
+  });
+};
 
-setupClose.addEventListener('click', function () {
-  closeDialog();
-});
+var initDialogEvents = function () {
+  setupOpen.addEventListener('click', function () {
+    openDialog();
+  });
+
+  setupClose.addEventListener('click', function () {
+    closeDialog();
+  });
+};
+
+var bindWizardEvent = function (wizardPart, property, colors, wizardPartHidden) {
+  wizardPart.addEventListener('click', function () {
+    var color = getRandomString(colors);
+    wizardPart.style[property] = wizardPartHidden.value = color;
+  });
+};
+
+var initWizardEvent = function (wizardPartSelector, property, colors, hiddenInputSelector) {
+  var wizardPart = document.querySelector(wizardPartSelector);
+  var wizardPartHinned = document.querySelector(hiddenInputSelector);
+  bindWizardEvent(wizardPart, property, colors, wizardPartHinned);
+};
+
+var initWizardEvents = function () {
+  initWizardEvent('.setup-wizard .wizard-coat', 'fill', COAT_COLORS, '[name=coat-color]');
+  initWizardEvent('.setup-wizard .wizard-eyes', 'fill', EYES_COLORS, '[name=eyes-color]');
+  initWizardEvent('.setup-fireball-wrap', 'backgroundColor', WRAP_COLORS, '[name=fireball-color]');
+};
+
+initDocumentEvents();
+
+initDialogEvents();
+
+initWizardEvents();
