@@ -78,20 +78,40 @@ var createDOMItem = function (item, template) {
 };
 
 var bindDOMItems = function (items) {
-  var itemTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item'),
-    domItem = null;
+  var itemTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
+  var domItem = null;
   for (var i = 0; i < items.length; i++) {
     domItem = createDOMItem(items[i], itemTemplate.cloneNode(true));
     dialogList.appendChild(domItem);
   }
 };
 
-var dialog = document.querySelector('.setup');
-dialog.classList.remove('hidden');
+// var dialog = document.querySelector('.setup');
+// dialog.classList.remove('hidden');
 
 document.querySelector('.setup-similar').classList.remove('hidden');
 
-var dialogList = document.querySelector('.setup-similar-list'),
-  items = getRandomItems(ITEMS_COUNT);
+var dialogList = document.querySelector('.setup-similar-list');
+var items = getRandomItems(ITEMS_COUNT);
 
 bindDOMItems(items);
+
+var setupDialog = document.querySelector('.setup');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setupDialog.querySelector('.setup-close');
+
+var openDialog = function () {
+  setupDialog.classList.remove('hidden');
+};
+
+var closeDialog = function () {
+  setupDialog.classList.add('hidden');
+};
+
+setupOpen.addEventListener('click', function () {
+  openDialog();
+});
+
+setupClose.addEventListener('click', function () {
+  closeDialog();
+});
