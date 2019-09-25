@@ -133,10 +133,10 @@ var initUserNameEvents = function () {
   var setupUserName = setupDialog.querySelector('.setup-user-name');
   setupUserName.addEventListener('focusin', function () {
     setupUserNameFocused = true;
-  })
+  });
   setupUserName.addEventListener('focusout', function () {
     setupUserNameFocused = false;
-  })
+  });
 };
 
 var initDialogEvents = function () {
@@ -162,7 +162,7 @@ var initDialogEvents = function () {
 };
 
 var bindWizardEvent = function (wizardPart, property, colors, wizardPartHidden) {
-  wizardPart.addEventListener('click', function (event) {
+  wizardPart.addEventListener('click', function () {
     var color = getRandomString(colors);
     wizardPart.style[property] = wizardPartHidden.value = color;
   });
