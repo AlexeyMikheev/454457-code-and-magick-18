@@ -23,12 +23,12 @@ var SURNAMES = [
 ];
 
 var COAT_COLORS = [
-  'rgb(101,137,164)',
-  'rgb(241,43,107)',
-  'rgb(146,100,161)',
-  'rgb(56,159,117)',
-  'rgb(215,210,55)',
-  'rgb(0,0,0)'
+  'rgb(101, 137, 164)',
+  'rgb(241, 43, 107)',
+  'rgb(146, 100, 161)',
+  'rgb(56, 159, 117)',
+  'rgb(215, 210, 55)',
+  'rgb(0, 0, 0)'
 ];
 
 var EYES_COLORS = [
@@ -97,9 +97,6 @@ var bindDOMItems = function (items) {
   }
 };
 
-// var dialog = document.querySelector('.setup');
-// dialog.classList.remove('hidden');
-
 document.querySelector('.setup-similar').classList.remove('hidden');
 
 var dialogList = document.querySelector('.setup-similar-list');
@@ -112,6 +109,7 @@ var setupOpen = document.querySelector('.setup-open');
 var setupClose = setupDialog.querySelector('.setup-close');
 
 var setupDialogOpened = false;
+var setupUserNameFocused = false;
 
 var openDialog = function () {
   setupDialogOpened = true;
@@ -125,13 +123,20 @@ var closeDialog = function () {
 
 var initDocumentEvents = function () {
   document.addEventListener('keydown', function (event) {
-    if (event.keyCode === ENTER_KEY && !setupDialogOpened) {
-      openDialog();
-    }
-    if (event.keyCode === ESC_KEY && setupDialogOpened) {
+    if (event.keyCode === ESC_KEY && setupDialogOpened && !setupUserNameFocused) {
       closeDialog();
     }
   });
+};
+
+var initUserNameEvents = function () {
+  var setupUserName = setupDialog.querySelector('.setup-user-name');
+  setupUserName.addEventListener('focusin', function () {
+    setupUserNameFocused = true;
+  })
+  setupUserName.addEventListener('focusout', function () {
+    setupUserNameFocused = false;
+  })
 };
 
 var initDialogEvents = function () {
@@ -139,13 +144,25 @@ var initDialogEvents = function () {
     openDialog();
   });
 
+  setupOpen.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEY) {
+      openDialog();
+    }
+  });
+
   setupClose.addEventListener('click', function () {
     closeDialog();
+  });
+
+  setupClose.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEY) {
+      closeDialog();
+    }
   });
 };
 
 var bindWizardEvent = function (wizardPart, property, colors, wizardPartHidden) {
-  wizardPart.addEventListener('click', function () {
+  wizardPart.addEventListener('click', function (event) {
     var color = getRandomString(colors);
     wizardPart.style[property] = wizardPartHidden.value = color;
   });
@@ -164,6 +181,8 @@ var initWizardEvents = function () {
 };
 
 initDocumentEvents();
+
+initUserNameEvents();
 
 initDialogEvents();
 
