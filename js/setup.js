@@ -23,12 +23,12 @@ var SURNAMES = [
 ];
 
 var COAT_COLORS = [
-  'rgb(101,137,164)',
-  'rgb(241,43,107)',
-  'rgb(146,100,161)',
-  'rgb(56,159,117)',
-  'rgb(215,210,55)',
-  'rgb(0,0,0)'
+  'rgb(101, 137, 164)',
+  'rgb(241, 43, 107)',
+  'rgb(146, 100, 161)',
+  'rgb(56, 159, 117)',
+  'rgb(215, 210, 55)',
+  'rgb(0, 0, 0)'
 ];
 
 var EYES_COLORS = [
@@ -39,7 +39,18 @@ var EYES_COLORS = [
   'green'
 ];
 
+var WRAP_COLORS = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
+];
+
 var ITEMS_COUNT = 4;
+
+var ENTER_KEY = 13;
+var ESC_KEY = 27;
 
 var randomInteger = function (min, max) {
   var rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -78,20 +89,101 @@ var createDOMItem = function (item, template) {
 };
 
 var bindDOMItems = function (items) {
-  var itemTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item'),
-    domItem = null;
+  var itemTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
+  var domItem = null;
   for (var i = 0; i < items.length; i++) {
     domItem = createDOMItem(items[i], itemTemplate.cloneNode(true));
     dialogList.appendChild(domItem);
   }
 };
 
-var dialog = document.querySelector('.setup');
-dialog.classList.remove('hidden');
-
 document.querySelector('.setup-similar').classList.remove('hidden');
 
-var dialogList = document.querySelector('.setup-similar-list'),
-  items = getRandomItems(ITEMS_COUNT);
+var dialogList = document.querySelector('.setup-similar-list');
+var items = getRandomItems(ITEMS_COUNT);
 
 bindDOMItems(items);
+
+var setupDialog = document.querySelector('.setup');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setupDialog.querySelector('.setup-close');
+
+var setupDialogOpened = false;
+var setupUserNameFocused = false;
+
+var openDialog = function () {
+  setupDialogOpened = true;
+  setupDialog.classList.remove('hidden');
+};
+
+var closeDialog = function () {
+  setupDialogOpened = false;
+  setupDialog.classList.add('hidden');
+};
+
+var initDocumentEvents = function () {
+  document.addEventListener('keydown', function (event) {
+    if (event.keyCode === ESC_KEY && setupDialogOpened && !setupUserNameFocused) {
+      closeDialog();
+    }
+  });
+};
+
+var initUserNameEvents = function () {
+  var setupUserName = setupDialog.querySelector('.setup-user-name');
+  setupUserName.addEventListener('focusin', function () {
+    setupUserNameFocused = true;
+  });
+  setupUserName.addEventListener('focusout', function () {
+    setupUserNameFocused = false;
+  });
+};
+
+var initDialogEvents = function () {
+  setupOpen.addEventListener('click', function () {
+    openDialog();
+  });
+
+  setupOpen.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEY) {
+      openDialog();
+    }
+  });
+
+  setupClose.addEventListener('click', function () {
+    closeDialog();
+  });
+
+  setupClose.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEY) {
+      closeDialog();
+    }
+  });
+};
+
+var bindWizardEvent = function (wizardPart, property, colors, wizardPartHidden) {
+  wizardPart.addEventListener('click', function () {
+    var color = getRandomString(colors);
+    wizardPart.style[property] = wizardPartHidden.value = color;
+  });
+};
+
+var initWizardEvent = function (wizardPartSelector, property, colors, hiddenInputSelector) {
+  var wizardPart = document.querySelector(wizardPartSelector);
+  var wizardPartHinned = document.querySelector(hiddenInputSelector);
+  bindWizardEvent(wizardPart, property, colors, wizardPartHinned);
+};
+
+var initWizardEvents = function () {
+  initWizardEvent('.setup-wizard .wizard-coat', 'fill', COAT_COLORS, '[name=coat-color]');
+  initWizardEvent('.setup-wizard .wizard-eyes', 'fill', EYES_COLORS, '[name=eyes-color]');
+  initWizardEvent('.setup-fireball-wrap', 'backgroundColor', WRAP_COLORS, '[name=fireball-color]');
+};
+
+initDocumentEvents();
+
+initUserNameEvents();
+
+initDialogEvents();
+
+initWizardEvents();
