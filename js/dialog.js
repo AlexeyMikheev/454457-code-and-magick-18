@@ -1,7 +1,6 @@
 'use strict';
 
 window.dialog = (function () {
-
   var ENTER_KEY = 13;
   var ESC_KEY = 27;
 
@@ -15,14 +14,23 @@ window.dialog = (function () {
     setupDialog.classList.remove('hidden');
   };
 
+  var setupDialog = document.querySelector('.setup');
+  var setupDialogCoords = {
+    x: setupDialog.style.left,
+    y: setupDialog.style.top
+  };
+  var setupOpen = document.querySelector('.setup-open');
+  var setupClose = setupDialog.querySelector('.setup-close');
+  var dialogHandler = setupDialog.querySelector('.upload');
+
   var closeDialog = function () {
     setupDialogOpened = false;
     setupDialog.classList.add('hidden');
   };
 
   var initDocumentEvents = function () {
-    document.addEventListener('keydown', function (event) {
-      if (event.keyCode === ESC_KEY && setupDialogOpened && !setupUserNameFocused) {
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === ESC_KEY && setupDialogOpened && !setupUserNameFocused) {
         closeDialog();
       }
     });
@@ -94,11 +102,11 @@ window.dialog = (function () {
         document.removeEventListener('mouseup', onMouseUp);
 
         if (dragged) {
-          var onClickPreventDefault = function (clickEvt) {
+          var onDialogHandlerClick = function (clickEvt) {
             clickEvt.preventDefault();
-            dialogHandler.removeEventListener('click', onClickPreventDefault);
+            dialogHandler.removeEventListener('click', onDialogHandlerClick);
           };
-          dialogHandler.addEventListener('click', onClickPreventDefault);
+          dialogHandler.addEventListener('click', onDialogHandlerClick);
         }
       };
 
@@ -121,19 +129,10 @@ window.dialog = (function () {
   };
 
   var initWizardEvents = function () {
-    initWizardEvent('.setup-wizard .wizard-coat', 'fill', window.util.COAT_COLORS, '[name=coat-color]');
-    initWizardEvent('.setup-wizard .wizard-eyes', 'fill', window.util.EYES_COLORS, '[name=eyes-color]');
-    initWizardEvent('.setup-fireball-wrap', 'backgroundColor', window.util.WRAP_COLORS, '[name=fireball-color]');
+    initWizardEvent('.setup-wizard .wizard-coat', 'fill', window.util.coatColors, '[name=coat-color]');
+    initWizardEvent('.setup-wizard .wizard-eyes', 'fill', window.util.eyesColors, '[name=eyes-color]');
+    initWizardEvent('.setup-fireball-wrap', 'backgroundColor', window.util.wrapColors, '[name=fireball-color]');
   };
-
-  var setupDialog = document.querySelector('.setup');
-  var setupDialogCoords = {
-    x: setupDialog.style.left,
-    y: setupDialog.style.top
-  };
-  var setupOpen = document.querySelector('.setup-open');
-  var setupClose = setupDialog.querySelector('.setup-close');
-  var dialogHandler = setupDialog.querySelector('.upload');
 
   initDocumentEvents();
 
@@ -142,5 +141,4 @@ window.dialog = (function () {
   initDialogEvents();
 
   initWizardEvents();
-
 })();

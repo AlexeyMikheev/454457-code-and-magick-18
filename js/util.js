@@ -48,13 +48,13 @@ window.util = (function () {
     '#e6e848'
   ];
 
-  var randomInteger = function (min, max) {
+  var getRandomInteger = function (min, max) {
     var rand = min - 0.5 + Math.random() * (max - min + 1);
     return Math.abs(Math.round(rand));
   };
 
   var getRandomString = function (strings) {
-    var randomIndex = randomInteger(0, strings.length - 1);
+    var randomIndex = getRandomInteger(0, strings.length - 1);
     return strings[randomIndex];
   };
 
@@ -77,11 +77,10 @@ window.util = (function () {
   };
 
   return {
-    COAT_COLORS: COAT_COLORS,
-    EYES_COLORS: EYES_COLORS,
-    WRAP_COLORS: WRAP_COLORS,
+    coatColors: COAT_COLORS,
+    eyesColors: EYES_COLORS,
+    wrapColors: WRAP_COLORS,
     getRandomString: getRandomString,
     getRandomItems: getRandomItems
   };
-
 })();

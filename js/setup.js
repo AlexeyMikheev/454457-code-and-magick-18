@@ -1,7 +1,6 @@
 'use strict';
 
 window.setup = (function () {
-
   var ITEMS_COUNT = 4;
 
   var createDOMItem = function (item, template) {
@@ -27,5 +26,4 @@ window.setup = (function () {
   var items = window.util.getRandomItems(ITEMS_COUNT);
 
   bindDOMItems(items);
-
 })();
