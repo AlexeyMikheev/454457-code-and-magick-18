@@ -4,6 +4,8 @@ window.dialog = (function () {
   var ENTER_KEY = 13;
   var ESC_KEY = 27;
 
+  var backEndModule = window.backend;
+
   var setupDialogOpened = false;
   var setupUserNameFocused = false;
 
@@ -19,6 +21,8 @@ window.dialog = (function () {
     x: setupDialog.style.left,
     y: setupDialog.style.top
   };
+
+  var setupWizardForm = document.querySelector('.setup-wizard-form');
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = setupDialog.querySelector('.setup-close');
   var dialogHandler = setupDialog.querySelector('.upload');
@@ -134,6 +138,13 @@ window.dialog = (function () {
     initWizardEvent('.setup-fireball-wrap', 'backgroundColor', window.util.wrapColors, '[name=fireball-color]');
   };
 
+  var initFormEvents = function () {
+    setupWizardForm.addEventListener('submit', function (evt) {
+      backEndModule.save(new FormData(setupWizardForm), closeDialog);
+      evt.preventDefault();
+    });
+  };
+
   initDocumentEvents();
 
   initUserNameEvents();
@@ -141,4 +152,6 @@ window.dialog = (function () {
   initDialogEvents();
 
   initWizardEvents();
+
+  initFormEvents();
 })();
