@@ -138,9 +138,13 @@ window.dialog = (function () {
     initWizardEvent('.setup-fireball-wrap', 'backgroundColor', window.util.wrapColors, '[name=fireball-color]');
   };
 
+  var onError = function (errorMessage) {
+    window.notification(errorMessage, setupWizardForm);
+  };
+
   var initFormEvents = function () {
     setupWizardForm.addEventListener('submit', function (evt) {
-      backEndModule.save(new FormData(setupWizardForm), closeDialog);
+      backEndModule.save(new FormData(setupWizardForm), closeDialog, onError);
       evt.preventDefault();
     });
   };
