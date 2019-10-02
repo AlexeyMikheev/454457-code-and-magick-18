@@ -1,6 +1,6 @@
 'use strict';
 
-window.setup = (function () {
+(function () {
   var ITEMS_COUNT = 4;
   var backEndModule = window.backend;
 

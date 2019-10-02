@@ -1,6 +1,6 @@
 'use strict';
 
-window.dialog = (function () {
+(function () {
   var ENTER_KEY = 13;
   var ESC_KEY = 27;
 

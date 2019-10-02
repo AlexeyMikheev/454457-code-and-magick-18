@@ -1,6 +1,6 @@
 'use strict';
 
-window.backend = (function () {
+(function () {
   var SAVE_URL = 'https://js.dump.academy/code-and-magick';
   var LOAD_URL = SAVE_URL + '/data';
   var load = function (onLoad, onError) {
@@ -42,7 +42,7 @@ window.backend = (function () {
     xhr.send(data);
   };
 
-  return {
+  window.backend = {
     load: load,
     save: save
   };
