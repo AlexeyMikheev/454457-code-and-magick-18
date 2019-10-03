@@ -1,8 +1,8 @@
 'use strict';
 
 (function () {
-  var SAVE_URL = 'https://js.dump.academy/code-and-magick';
-  var LOAD_URL = SAVE_URL + '/data';
+  var URL = 'https://js.dump.academy/code-and-magick';
+  var URL_DATA = 'https://js.dump.academy/code-and-magick/data';
   var load = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
@@ -20,7 +20,7 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
     xhr.timeout = 10000; // 10s
-    xhr.open('GET', LOAD_URL);
+    xhr.open('GET', URL_DATA);
     xhr.send();
   };
 
@@ -38,7 +38,7 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
-    xhr.open('POST', SAVE_URL);
+    xhr.open('POST', URL);
     xhr.send(data);
   };
 

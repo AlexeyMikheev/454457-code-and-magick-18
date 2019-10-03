@@ -144,8 +144,8 @@
 
   var initFormEvents = function () {
     setupWizardForm.addEventListener('submit', function (evt) {
-      backEndModule.save(new FormData(setupWizardForm), closeDialog, onError);
       evt.preventDefault();
+      backEndModule.save(new FormData(setupWizardForm), closeDialog, onError);
     });
   };
 
