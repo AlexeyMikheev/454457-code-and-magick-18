@@ -1,8 +1,9 @@
 'use strict';
 
 (function () {
-  var URL = 'https://js.dump.academy/code-and-magick';
+  var URL = 'https://js.dump.academy/code-and-magick123';
   var URL_DATA = 'https://js.dump.academy/code-and-magick/data';
+
   var load = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
@@ -25,11 +26,16 @@
   };
 
   var save = function (data, onLoad, onError) {
+    debugger;
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      onLoad(xhr.response);
+      if (xhr.status === 200) {
+        onLoad(xhr.response);
+      } else {
+        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
+      }
     });
     xhr.addEventListener('error', function () {
       onError('Произошла ошибка соединения');
