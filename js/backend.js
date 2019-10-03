@@ -26,7 +26,6 @@
   };
 
   var save = function (data, onLoad, onError) {
-    debugger;
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
