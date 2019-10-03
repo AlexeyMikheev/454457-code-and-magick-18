@@ -1,6 +1,6 @@
 'use strict';
 
-window.util = (function () {
+(function () {
   var NAMES = [
     'Иван',
     'Хуан Себастьян',
@@ -76,7 +76,7 @@ window.util = (function () {
     return items;
   };
 
-  return {
+  window.util = {
     coatColors: COAT_COLORS,
     eyesColors: EYES_COLORS,
     wrapColors: WRAP_COLORS,
