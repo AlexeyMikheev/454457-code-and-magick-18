@@ -6,6 +6,7 @@
 
   var backEndModule = window.backend;
   var setupModule = window.setup;
+  var debounce = window.debounce;
 
   var setupDialogOpened = false;
   var setupUserNameFocused = false;
@@ -125,7 +126,7 @@
       var color = window.util.getRandomString(colors);
       wizardPart.style[property] = wizardPartHidden.value = color;
       if (callback) {
-        callback(color);
+        debounce(callback, color);
       }
     });
   };
