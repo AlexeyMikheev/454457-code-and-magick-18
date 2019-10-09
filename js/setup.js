@@ -29,9 +29,8 @@
       return 1;
     } else if (left < right) {
       return -1;
-    } else {
-      return 0;
     }
+    return 0;
   };
 
   var onWizardEyesChange = function (color) {
@@ -55,7 +54,7 @@
   var refreshWizards = function () {
     renderWizards(wizards.sort(function (left, right) {
       var diffWeight = getWeight(right) - getWeight(left);
-      if (diffWeight === 0) {
+      if (!diffWeight) {
         diffWeight = namesComparator(left.name, right.name);
       }
       return diffWeight;
@@ -66,11 +65,13 @@
     var itemTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
     var domItem = null;
     similarList.innerHTML = '';
+    var similarListFragment = document.createDocumentFragment();
 
     for (var i = 0; i < ITEMS_COUNT; i++) {
       domItem = createWizard(items[i], itemTemplate.cloneNode(true));
-      similarList.appendChild(domItem);
+      similarListFragment.appendChild(domItem);
     }
+    similarList.appendChild(similarListFragment);
   };
 
   var onError = function (errorMessage) {
