@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var URL = 'https://js.dump.academy/code-and-magick123';
+  var URL = 'https://js.dump.academy/code-and-magick';
   var URL_DATA = 'https://js.dump.academy/code-and-magick/data';
 
   var load = function (onLoad, onError) {
