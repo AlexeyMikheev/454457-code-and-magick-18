@@ -3,7 +3,7 @@
 (function () {
   var ENTER_KEY = 13;
   var ESC_KEY = 27;
-  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png', 'svg'];
 
   var backEndModule = window.backend;
   var setupModule = window.setup;
@@ -15,12 +15,14 @@
   var Coordinate = function (x, y) {
     this.x = x;
     this.y = y;
-    this.setX = function (value) {
-      this.x = value;
-    };
-    this.setY = function (value) {
-      this.y = value;
-    };
+  };
+
+  Coordinate.prototype.setX = function (value) {
+    this.x = value;
+  };
+
+  Coordinate.prototype.setY = function (value) {
+    this.y = value;
   };
 
   var openDialog = function () {
